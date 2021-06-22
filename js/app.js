@@ -17,6 +17,9 @@
  * Define Global Variables
  *
  */
+let navBar = document.querySelector('#navbar__list')
+let sectsArr = document.getElementsByTagName('section')
+let fragmentItem = document.createDocumentFragment()
 
 /**
  * End Global Variables
@@ -32,25 +35,16 @@
 
 // build the nav
 
-const navList = document.querySelector('#navbar__list')
-
-const sects = document.getElementsByTagName('section')
-// locate the section tags
-
-for (let i = 0; i < sects.length; i++) {
-  const navItem = document.createElement('li')
-
-  navItem.classList.add('navbar__menu')
-
-  const liText = document
-    .querySelectorAll('section')
-    [i].getAttribute('data-nav')
-  const liId = document.querySelectorAll('section')[i].id
-  navItem.innerHTML = `<a href='#${liId}' class='menu__link'>${liText}</a>`
-
-  navList.appendChild(navItem)
-  // adding a list item for every section element in the landing page '
+for (const sect of sectsArr) {
+  const navListItem = document.createElement('li')
+  const sectionName = sect.getAttribute('data-nav')
+  const sectionId = sect.getAttribute('id')
+  navListItem.innerHTML = `<a href='#${sectionId}' class='menu__link'>${sectionName}</a>`
+  fragmentItem.appendChild(navListItem)
 }
+navBar.appendChild(fragmentItem)
+
+// toggle "active" class to list item
 const activeLinks = document.querySelectorAll('nav ul li')
 
 activeLinks.forEach((link) => {
@@ -59,22 +53,13 @@ activeLinks.forEach((link) => {
     link.classList.add('active')
   })
 })
+
 function removeStyle(arr, index) {
   arr.forEach((index) => {
     index.classList.remove('active')
   })
 }
-// // Add class 'active' to section when near top of viewport
-// for (x = 0; x < sects.length; x++) {
-//   window.addEventListener('scroll', function () {
-//     if (sect.classList.contains('your-active-class')) {
-//       sects[x].classList.add('your-active-class')
-//       sects[0].classList.remove('your-active-class')
-//     }
-//   })
-// }
-
-// Scroll to anchor ID using scrollTO event
+// Add class 'active' to section when near top of viewport
 
 /**
  * End Main Functions
@@ -86,4 +71,25 @@ function removeStyle(arr, index) {
 
 // Scroll to section on link click
 
-// Set sections as active
+const observerOptions = {
+  /* changing the rootMargin Parameters affects the activation of the active style  "top left bottom right*/
+  rootMargin: '-10% 0% -20% 0%',
+}
+
+var locatActiveSections = new IntersectionObserver(function (
+  elmnts,
+  locatActiveSections
+) {
+  elmnts.forEach((elmnt) => {
+    if (!elmnt.isIntersecting) {
+      elmnt.target.classList.remove('your-active-class')
+    } else {
+      elmnt.target.classList.add('your-active-class')
+    }
+  })
+},
+observerOptions)
+
+for (const activeSection of sectsArr) {
+  locatActiveSections.observe(activeSection)
+}
