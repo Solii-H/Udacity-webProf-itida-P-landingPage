@@ -9,6 +9,10 @@
 */
 
 /* ---- Base Rules ---- */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: rgb(136, 203, 171);
   background: linear-gradient(
@@ -28,7 +32,7 @@ h1 {
   margin: 2em 1rem;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width: 35em) {
   h1 {
     font-size: 7em;
     margin: 2em 4rem 1em;
@@ -66,14 +70,13 @@ section {
 
 /* Navigation Styles*/
 .navbar__menu ul {
-  padding-left: 1em;
-  margin: 1em;
+  padding-left: 0;
+  margin: 0;
   text-align: right;
 }
 
 .navbar__menu li {
   display: inline-block;
-  font-weight: bold;
 }
 
 .navbar__menu .menu__link {
@@ -91,39 +94,9 @@ section {
 }
 
 .navbar__menu .active {
-  background: rgb(168, 44, 44);
-  color: rgb(161, 41, 41);
+  background: rgb(90, 53, 53);
+  color: rgb(112, 111, 33);
   transition: ease 0.3s all;
-}
-@media only screen and (max-width: 600px) {
-  .navbar__menu ul {
-    text-align: center;
-  }
-
-  .navbar__menu li {
-    display: block;
-    font-weight: bold;
-  }
-
-  .navbar__menu .menu__link {
-    display: block;
-    padding: 1em;
-    font-weight: bold;
-    text-decoration: none;
-    color: #000;
-  }
-
-  .navbar__menu .menu__link:hover {
-    background: #333;
-    color: #fff;
-    transition: ease 0.3s all;
-  }
-
-  .navbar__menu .active {
-    background: rgb(168, 44, 44);
-    color: rgb(161, 41, 41);
-    transition: ease 0.3s all;
-  }
 }
 
 /* Header Styles */
@@ -149,10 +122,8 @@ section {
 /* ---- Theme Rules ---- */
 /* Landing Container Styles */
 .landing__container {
-  --ease: all 300ms ease;
   padding: 1em;
   text-align: left;
-  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 @media only screen and (min-width: 35em) {
@@ -250,8 +221,12 @@ section.your-active-class {
     rgba(0, 0, 0, 0.1) 0%,
     rgba(0, 0, 0, 0) 100%
   );
+  transition: ease 0.7s all;
 }
-
+section.your-active-class h2 {
+  color: #cc1;
+  transition: ease 0.7s all;
+}
 section.your-active-class .landing__container::before {
   opacity: 1;
   animation: rotate 4s linear 0s infinite forwards;
