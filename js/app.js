@@ -17,9 +17,9 @@
  * Define Global Variables
  *
  */
-let navBar = document.querySelector('#navbar__list')
-let sectsArr = document.getElementsByTagName('section')
-let fragmentItem = document.createDocumentFragment()
+const navBar = document.querySelector('#navbar__list')
+const sectsArr = document.getElementsByTagName('section')
+const fragmentItem = document.createDocumentFragment()
 
 /**
  * End Global Variables
@@ -32,35 +32,46 @@ let fragmentItem = document.createDocumentFragment()
  * Begin Main Functions
  *
  */
-
+let sectionId
 // build the nav
 
-for (const sect of sectsArr) {
+for (let sect of sectsArr) {
   const navListItem = document.createElement('li')
+  navListItem.className = 'menu__link'
   const sectionName = sect.getAttribute('data-nav')
   const sectionId = sect.getAttribute('id')
-  navListItem.innerHTML = `<a href='#${sectionId}' class='menu__link'>${sectionName}</a>`
+  navListItem.innerHTML = `<a href='#${sectionId}' data-nav='${sectionId}' class='menu__link'>${sectionName}</a>`
   fragmentItem.appendChild(navListItem)
 }
 navBar.appendChild(fragmentItem)
 
-// toggle "active" class to list item
-const activeLinks = document.querySelectorAll('nav ul li')
+// Add class 'active' to section when near top of viewport
+window.addEventListener('scroll', toggleActiveState())
 
-activeLinks.forEach((link) => {
-  link.addEventListener('click', function () {
-    removeStyle(activeLinks, link)
-    link.classList.add('active')
-  })
-})
+function toggleActiveState() {
+  let observer = new IntersectionObserver(
+    (allSections) => {
+      allSections.forEach((section) => {
+        link = document.querySelector(`a[href='#${section.target.id}']`)
+        if (!section.isIntersecting) {
+          section.target.classList.remove('your-active-class')
+          link.classList.remove('active')
+        } else {
+          section.target.classList.add('your-active-class')
+          link.classList.add('active')
+        }
+      })
+    },
 
-function removeStyle(arr, index) {
-  arr.forEach((index) => {
-    index.classList.remove('active')
+    {
+      rootMargin: '-40% 0% -45% 0%',
+      /* changing the rootMargin Parameters affects the activation of the active style  "top left bottom right*/
+    }
+  )
+  document.querySelectorAll('section').forEach((sect) => {
+    observer.observe(sect)
   })
 }
-// Add class 'active' to section when near top of viewport
-
 /**
  * End Main Functions
  * Begin Events
@@ -70,26 +81,17 @@ function removeStyle(arr, index) {
 // Build menu
 
 // Scroll to section on link click
+const allLinks = document.querySelectorAll('nav ul li ')
 
-const observerOptions = {
-  /* changing the rootMargin Parameters affects the activation of the active style  "top left bottom right*/
-  rootMargin: '-10% 0% -20% 0%',
-}
+allLinks.forEach((activeLink) => {
+  var targetId = activeLink.firstChild.attributes
 
-var locatActiveSections = new IntersectionObserver(function (
-  elmnts,
-  locatActiveSections
-) {
-  elmnts.forEach((elmnt) => {
-    if (!elmnt.isIntersecting) {
-      elmnt.target.classList.remove('your-active-class')
-    } else {
-      elmnt.target.classList.add('your-active-class')
-    }
+  var targetSection = document.querySelector(`${targetId}`)
+  console.log(targetId)
+  activeLink.addEventListener('click', function () {
+    targetSection.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    })
   })
-},
-observerOptions)
-
-for (const activeSection of sectsArr) {
-  locatActiveSections.observe(activeSection)
-}
+})
