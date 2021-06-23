@@ -69,18 +69,21 @@ section {
 /* ---- Module Rules ---- */
 
 /* Navigation Styles*/
+.nav > .nav-btn {
+  display: none;
+}
+.nav > #nav-check {
+  display: none;
+}
+
 .navbar__menu ul {
   padding-left: 0;
   margin: 0;
   text-align: right;
 }
 
-.navbar__menu li {
-  display: inline-block;
-}
-
 .navbar__menu .menu__link {
-  display: block;
+  display: inline-block;
   padding: 1em;
   font-weight: bold;
   text-decoration: none;
@@ -93,12 +96,48 @@ section {
   transition: ease 0.3s all;
 }
 
-.navbar__menu .active {
-  background: rgb(90, 53, 53);
-  color: rgb(112, 111, 33);
-  transition: ease 0.3s all;
+.navbar__menu .menu__link .active {
+  display: inline-block;
+  background: rgb(170, 92, 92);
+  color: rgb(235, 233, 144);
+  transition: ease 0.1s all;
 }
-
+@media only screen and (max-width: 600px) {
+  .nav > .nav-btn > label > span {
+    display: block;
+    width: 25px;
+    height: 10px;
+    border-top: 2px solid #eee;
+  }
+  .nav > #nav-check:not(:checked) ~ .nav-links {
+    height: 0px;
+  }
+  .nav > #nav-check:checked ~ .nav-links {
+    height: calc(100vh - 50px);
+    overflow-y: auto;
+  }
+  .navbar__menu ul {
+    padding-left: 0;
+    margin: 0;
+    text-align: center;
+  }
+  .navbar__menu li {
+    display: block;
+    padding: 0.2em 2em;
+  }
+  .navbar__menu .menu__link {
+    display: block;
+    padding: 1em;
+    font-weight: bold;
+    text-decoration: none;
+    color: #000;
+  }
+  .navbar__menu .menu__link .active {
+    display: block;
+    background: rgb(170, 92, 92);
+    color: rgb(235, 233, 144);
+  }
+}
 /* Header Styles */
 .page__header {
   background: #fff;
@@ -221,11 +260,11 @@ section.your-active-class {
     rgba(0, 0, 0, 0.1) 0%,
     rgba(0, 0, 0, 0) 100%
   );
-  transition: ease 0.7s all;
+  transition: ease 0.2s all;
 }
 section.your-active-class h2 {
   color: #cc1;
-  transition: ease 0.7s all;
+  transition: ease 0.2s all;
 }
 section.your-active-class .landing__container::before {
   opacity: 1;
