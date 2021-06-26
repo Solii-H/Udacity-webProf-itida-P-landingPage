@@ -8,11 +8,6 @@
  *
 */
 
-/* ---- Base Rules ---- */
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   background: rgb(136, 203, 171);
   background: linear-gradient(
@@ -69,11 +64,14 @@ section {
 /* ---- Module Rules ---- */
 
 /* Navigation Styles*/
-.nav > .nav-btn {
+.navbar__menu .icon {
   display: none;
-}
-.nav > #nav-check {
-  display: none;
+  cursor: pointer;
+  float: right;
+  padding: 25px;
+  position: fixed;
+  background-color: bisque;
+  position: inherit;
 }
 
 .navbar__menu ul {
@@ -88,6 +86,7 @@ section {
   font-weight: bold;
   text-decoration: none;
   color: #000;
+  cursor: pointer;
 }
 
 .navbar__menu .menu__link:hover {
@@ -96,46 +95,39 @@ section {
   transition: ease 0.3s all;
 }
 
-.navbar__menu .menu__link .active {
+.active__link {
   display: inline-block;
   background: rgb(170, 92, 92);
   color: rgb(235, 233, 144);
   transition: ease 0.1s all;
 }
-@media only screen and (max-width: 600px) {
-  .nav > .nav-btn > label > span {
+
+@media only screen and (max-width: 810px) {
+  .navbar__menu .icon {
+    display: block;
+  }
+
+  .navbar__menu .icon span {
     display: block;
     width: 25px;
-    height: 10px;
-    border-top: 2px solid #eee;
+    height: 4px;
+    margin: 5px;
+    background-color: #000;
+    border-radius: 6px;
+    position: relative;
   }
-  .nav > #nav-check:not(:checked) ~ .nav-links {
-    height: 0px;
+  .topnav {
+    display: none;
   }
-  .nav > #nav-check:checked ~ .nav-links {
-    height: calc(100vh - 50px);
-    overflow-y: auto;
-  }
-  .navbar__menu ul {
-    padding-left: 0;
-    margin: 0;
-    text-align: center;
-  }
-  .navbar__menu li {
+  .responsive {
     display: block;
-    padding: 0.2em 2em;
   }
   .navbar__menu .menu__link {
     display: block;
-    padding: 1em;
-    font-weight: bold;
-    text-decoration: none;
-    color: #000;
   }
-  .navbar__menu .menu__link .active {
-    display: block;
-    background: rgb(170, 92, 92);
-    color: rgb(235, 233, 144);
+  .navbar__menu ul {
+    float: right;
+    text-align: center;
   }
 }
 /* Header Styles */
